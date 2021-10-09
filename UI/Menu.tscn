@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://UI/Menu.gd" type="Script" id=1]
-[ext_resource path="res://Assets/background1.png" type="Texture" id=2]
+[ext_resource path="res://Assets/background.png" type="Texture" id=2]
 [ext_resource path="res://Assets/FFF_NEPSZA-BADSAG-Bold.otf" type="DynamicFontData" id=3]
 [ext_resource path="res://Assets/Ignotum.otf" type="DynamicFontData" id=4]
 
@@ -26,7 +26,7 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( -130, 0 )
+position = Vector2( -316.489, -0.252258 )
 texture = ExtResource( 2 )
 centered = false
 

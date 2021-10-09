@@ -1,25 +1,34 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Grid/grid.gd" type="Script" id=1]
 [ext_resource path="res://Pieces/Piece Background.tscn" type="PackedScene" id=2]
 [ext_resource path="res://UI/HUD.gd" type="Script" id=3]
 [ext_resource path="res://Assets/coin_small.png" type="Texture" id=4]
-[ext_resource path="res://Assets/background2.png" type="Texture" id=5]
+[ext_resource path="res://Assets/background.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Ignotum.otf" type="DynamicFontData" id=6]
 [ext_resource path="res://UI/Music.gd" type="Script" id=7]
 [ext_resource path="res://Assets/music.ogg" type="AudioStream" id=8]
 [ext_resource path="res://Assets/1.wav" type="AudioStream" id=9]
-[ext_resource path="res://Assets/2.wav" type="AudioStream" id=10]
+[ext_resource path="res://UI/Instructions.gd" type="Script" id=10]
 [ext_resource path="res://Assets/3.wav" type="AudioStream" id=11]
+[ext_resource path="res://UI/Camera.gd" type="Script" id=12]
 
 [sub_resource type="DynamicFont" id=1]
-size = 18
+size = 20
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 24
 font_data = ExtResource( 6 )
 
 [node name="Game" type="Node2D"]
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( -130, 0 )
+position = Vector2( -311.295, 1.49826 )
 texture = ExtResource( 5 )
 centered = false
 
@@ -33,6 +42,11 @@ offset = 69
 background = ExtResource( 2 )
 
 [node name="Effects" type="Node2D" parent="."]
+
+[node name="Camera" type="Camera2D" parent="."]
+anchor_mode = 0
+current = true
+script = ExtResource( 12 )
 
 [node name="HUD" type="Control" parent="."]
 margin_right = 40.0
@@ -65,20 +79,74 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Time" type="Label" parent="HUD"]
+margin_left = 40.0
+margin_top = 7.0
+margin_right = 555.0
+margin_bottom = 27.0
+custom_fonts/font = SubResource( 1 )
+text = "Time: 60"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="HUD"]
+autostart = true
+
+[node name="Instructions" type="Control" parent="HUD"]
+pause_mode = 2
+visible = false
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="HUD/Instructions"]
+margin_right = 576.0
+margin_bottom = 1024.0
+color = Color( 0, 0, 0, 0.752941 )
+
+[node name="Label" type="Label" parent="HUD/Instructions"]
+margin_right = 576.0
+margin_bottom = 848.0
+custom_fonts/font = SubResource( 2 )
+text = "Level 1:
+
+How many points can you score in a minute?
+"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="Countdown" type="Label" parent="HUD/Instructions"]
+margin_right = 576.0
+margin_bottom = 1024.0
+custom_fonts/font = SubResource( 3 )
+text = "Starting in"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Countdown2" type="Timer" parent="HUD/Instructions"]
+autostart = true
+
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
-volume_db = -16.155
+volume_db = -24.096
 autoplay = true
 script = ExtResource( 7 )
 
-[node name="2" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 10 )
-
 [node name="3" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 11 )
+volume_db = -31.015
 
 [node name="1" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
-volume_db = -5.361
+volume_db = -27.7
 
+[connection signal="timeout" from="HUD/Timer" to="HUD" method="_on_Timer_timeout"]
+[connection signal="timeout" from="HUD/Instructions/Countdown2" to="HUD/Instructions" method="_on_Countdown2_timeout"]
 [connection signal="finished" from="Music" to="Music" method="_on_Music_finished"]
